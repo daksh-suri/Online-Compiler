@@ -1,0 +1,114 @@
+.submission-card {
+    margin: 0;
+    padding: 0.5rem 0.75rem;
+    font-family: var(--mono, ui-monospace, Consolas, monospace);
+    font-size: 0.85rem;
+    color: #d4d4d4;
+    background: transparent;
+    border-bottom: 1px solid #2d3139;
+    text-align: left;
+}
+
+.toolbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+}
+
+.toolbar-group {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+}
+
+.workspace {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    min-height: 0;
+    width: 100%;
+    text-align: left;
+}
+
+.editor-pane {
+    flex-grow: 0;
+    flex-shrink: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+}
+
+.divider {
+    flex-grow: 0;
+    flex-shrink: 0;
+    width: 6px;
+    cursor: col-resize;
+    background: transparent;
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+}
+
+.divider:hover,
+.divider:focus {
+    background: var(--accent-bg, rgba(170, 59, 255, 0.15));
+    outline: none;
+}
+
+.output-pane {
+    flex-grow: 0;
+    flex-shrink: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    background: #1e1e1e;
+}
+
+.output-empty {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+    font-style: italic;
+    padding: 16px;
+}
+
+.output-body {
+    flex: 1;
+    overflow-y: auto;
+    margin: 0;
+    padding: 12px 16px;
+    background: transparent;
+    color: #f5f5f5;
+    font-family: var(--mono, ui-monospace, Consolas, monospace);
+    font-size: 14px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+    text-align: left;
+}
+
+@media (max-width: 768px) {
+    .workspace {
+        flex-direction: column;
+    }
+    .divider {
+        display: none;
+    }
+    .editor-pane,
+    .output-pane {
+        flex-basis: auto !important;
+        height: 50vh;
+    }
+}

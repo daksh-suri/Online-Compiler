@@ -1,0 +1,11 @@
+.code-editor-wrapper {
+    border: 1px solid #2d3139;
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 8px 0 12px 0;
+    font-family: var(--mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+}
+
+.code-editor-wrapper .cm-editor {
+    font-size: 14px;
+}
