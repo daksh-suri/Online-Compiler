@@ -14,6 +14,7 @@
     "bull": "^4.16.5",
     "cors": "^2.8.6",
     "express": "^5.2.1",
+    "express-rate-limit": "^8.5.2",
     "mongoose": "^9.7.0",
     "uuid": "^14.0.0"
   }

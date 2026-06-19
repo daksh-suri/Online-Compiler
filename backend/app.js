@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const rateLimit = require('express-rate-limit');
 const PORT = process.env.PORT || 4444;
 const MONGO_URL = process.env.MONGO_URL || 'mongodb://127.0.0.1:27017/compilerApp';
 const app = express();
@@ -14,7 +15,28 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 
-app.post('/run', async (req, res) => {
+const runLimiter = rateLimit({
+    windowMs: 60 * 1000, // 1 minute
+    max: 10, // max 10 code runs per IP per minute
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: {
+        success: false,
+        error: {
+            message: 'Too many code execution requests. Please try again later.',
+            code: 'RATE_LIMITED',
+        },
+    },
+});
+
+const statusLimiter = rateLimit({
+    windowMs: 60 * 1000,
+    max: 120,
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
+app.post('/run', runLimiter, async (req, res) => {
     const { language, code } = req.body;
 
     try {
@@ -37,7 +59,7 @@ app.post('/run', async (req, res) => {
     }
 })
 
-app.get('/status', async (req, res) => {
+app.get('/status', statusLimiter, async (req, res) => {
     const jobId = req.query.id;
 
     try {

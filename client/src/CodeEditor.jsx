@@ -13,7 +13,7 @@ const CodeEditor = ({ value, onChange, language }) => {
                 value={value}
                 onChange={onChange}
                 extensions={[languageExtension(language), oneDark]}
-                minHeight="480px"
+                height="100%"
                 basicSetup={{
                     lineNumbers: true,
                     highlightActiveLine: true,

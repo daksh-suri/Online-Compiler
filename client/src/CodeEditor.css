@@ -1,11 +1,37 @@
 .code-editor-wrapper {
-    border: 1px solid #2d3139;
-    border-radius: 6px;
-    overflow: hidden;
-    margin: 8px 0 12px 0;
-    font-family: var(--mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #000000;
+}
+
+.code-editor-wrapper > .cm-theme,
+.code-editor-wrapper .cm-editor {
+  flex: 1;
+  min-height: 0;
+  height: 100%;
 }
 
 .code-editor-wrapper .cm-editor {
-    font-size: 14px;
+  font-size: 14px;
+  outline: none;
+}
+
+.code-editor-wrapper .cm-scroller {
+  font-family: var(--mono);
+  line-height: 1.55;
+}
+
+.code-editor-wrapper .cm-content {
+  padding: 12px 0;
+}
+
+.code-editor-wrapper .cm-line {
+  padding: 0 16px;
+}
+
+.code-editor-wrapper .cm-gutters {
+  border-right: 1px solid #333333;
 }
