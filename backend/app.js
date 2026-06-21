@@ -1,9 +1,11 @@
+const dotenv = require('dotenv');
+dotenv.config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const rateLimit = require('express-rate-limit');
 const PORT = process.env.PORT || 4444;
-const MONGO_URL = process.env.MONGO_URL || 'mongodb://127.0.0.1:27017/compilerApp';
+const MONGO_URL = process.env.MONGO_URL;
 const app = express();
 
 const generateFile = require('./generateFile.js');

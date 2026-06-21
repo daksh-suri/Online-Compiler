@@ -8,6 +8,7 @@ const { AppError, getErrorMessage } = require('./utils/errors.js');
 
 const NUM_WORKERS = Number(process.env.NUM_WORKERS) || 5;
 const codeDirectory = path.join(__dirname, 'srcCodes');
+const outputDirectory = path.join(__dirname,'outputs');
 const redisConfig = {
     host: process.env.REDIS_HOST || '127.0.0.1',
     port: Number(process.env.REDIS_PORT) || 6379,
@@ -40,7 +41,10 @@ jobQueue.process(NUM_WORKERS, async ({ data }) => {
         await markJobFailed(job, message);
         throw new AppError(message, 500, 'SOURCE_FILE_MISSING');
     }
-
+    const executableStem = path.basename(job.filename, path.extname(job.filename));
+    const outPath = path.join(outputDirectory,
+        process.platform === 'win32' ? `${executableStem}.exe` : `${executableStem}.out`
+    );
     try {
         job.startedAt = new Date();
         const output = job.language === 'cpp'
@@ -51,11 +55,16 @@ jobQueue.process(NUM_WORKERS, async ({ data }) => {
         job.status = 'success';
         job.output = output.stdout;
         await job.save();
+
         return true;
     } catch (error) {
         const message = getErrorMessage(error, 'Execution failed');
         await markJobFailed(job, message);
         throw new Error(message);
+    }
+    finally {
+        fs.unlinkSync(filePath);
+        if (job.language === 'cpp' && fs.existsSync(outPath)) fs.unlinkSync(outPath); 
     }
 });
 
