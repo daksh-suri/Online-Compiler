@@ -1,0 +1,27 @@
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "4444:4444"
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/compilerApp
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - PYTHON_COMMAND=python3
+    depends_on:
+      - mongo
+      - redis
+
+  mongo:
+    image: mongo:7
+    volumes:
+      - mongo_data:/data/db
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis_data:/data
+
+volumes:
+  mongo_data:
+  redis_data:
